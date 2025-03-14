@@ -1,18 +1,30 @@
-const Card = ({title}) => {
+import React, { useState, useEffect } from "react";
+
+const Card = ({ title }) => {
+  const [count, setCount] = useState(0);
+  const [hasLiked, setHasLiked] = useState(false);
+
+  useEffect(() => {
+    console.log(`${title} has been liked: ${hasLiked}`);
+},[hasLiked]);
+ 
   return (
-    <div>
-      <h2>{title}</h2>
+    <div className="card" onClick={() => setCount((prevState) => prevState + 1)}>
+     
+      <h2>
+        {title} <br /> {count || null}
+      </h2>
+      <button onClick={() => setHasLiked(!hasLiked)}>{hasLiked ? "❤️" : "🤍"}</button>
     </div>
   );
 };
 
-const App = (t) => {
+const App = () => {
   return (
-    <div>
-      <h2>Movie Selection App</h2>)
-      <Card title="The Crudes"/>
-      <Card title="Transylvania 1"/>
-      <Card title="Lorax"/>
+    <div className="card-container">
+      <Card title="The Crudes" rating={5} isCool={true} />
+      <Card title="SWAT" />
+      <Card title="Lorax" />
     </div>
   );
 };

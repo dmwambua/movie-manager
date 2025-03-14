@@ -5,7 +5,7 @@ Uses React, Appwrite for backend, tailwind
 
 Youtube Tutorial link https://www.youtube.com/watch?v=dCLhUialKPQ
 
-Minute 16.46
+Minute 33
 
 http://localhost:5173/
 
