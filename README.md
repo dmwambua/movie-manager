@@ -2,10 +2,11 @@
 
 This is an app that suggests top movies
 Uses React, Appwrite for backend, tailwind
-
+Installed Simple React Snippets - run by typing rafce
 Youtube Tutorial link https://www.youtube.com/watch?v=dCLhUialKPQ
 
-Minute 33
+TMDB API KEY website https://www.themoviedb.org/settings/api
+
 
 http://localhost:5173/
 
