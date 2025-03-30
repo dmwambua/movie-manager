@@ -10,7 +10,7 @@ TMDB API KEY website https://www.themoviedb.org/settings/api
 
 http://localhost:5173/
 
-
+Spinner source https://flowbite.com/docs/components/spinner/
 
 
 
