@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/movie-manager/', // Set the base to match your GitHub repository name
+  base: '/movie-manager/',
   plugins: [react(), tailwindcss()],
 });
 
