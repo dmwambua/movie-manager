@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect } from "react";
 import Search from "./components/Search.jsx";
 import Spinner from "./components/Spinner.jsx";
 import MovieCard from "./components/MovieCard.jsx";
 import { useDebounce } from "react-use";
-import { updateSearchCount } from "./appwrite.js";
+import { getTrendingMovies, updateSearchCount } from "./appwrite.js";
 const API_BASE_URL = 'https://api.themoviedb.org/3';
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const API_OPTIONS = {
@@ -22,7 +21,9 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [movies, setMovies] = useState([]);
+  const [trendingMovies, setTrendingMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
   
   // Debounce the search term to avoid too many API calls
   // useDebounce is a custom hook that delays the execution of a function
@@ -61,10 +62,32 @@ if(query && data.results.length > 0) {
       }
       
     };
+const loadTrendingMovies = async () => {
+  setIsLoading(true);
+  setErrorMessage('');
+  try {
+    const movies = await getTrendingMovies();
+setTrendingMovies(movies);
+    if (movies.length === 0) {
+      setErrorMessage('No trending movies found.');
+      return;
+    }
 
+    // setTrendingMovies(data.results || []); // This line is redundant and can be removed
+  }
+  catch (error) {
+    console.error(`Error Fetching Trending Movies. Please try again later: ${error}`);
+  } finally {
+    setIsLoading(false);
+  }
+};
     useEffect(() => {
       fetchMovies(debouncedSearchTerm);
     }, [debouncedSearchTerm]);
+useEffect(() => {
+  loadTrendingMovies();
+}
+, []);
 
     return (
       <main>
@@ -78,8 +101,24 @@ if(query && data.results.length > 0) {
             </h1>
             <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           </header>
+          
+<>
+{trendingMovies.length > 0 && (
+          <section className="trending">
+            <h2>Trending Movies</h2>
+            <ul>
+              {trendingMovies.map((movie, index) => (
+               <li key={movie.$id}>
+                <p>{index + 1}</p>
+                <img src={movie.poster_url || '/default-poster.png'} alt={movie.title} />
+               </li>
+              ))}
+            </ul>
+          </section>
+)}
+
           <section className="all-movies">
-            <h2 className="mt-[40px]">All Movies</h2>
+            <h2>All Movies</h2>
           {isLoading ? (
             <Spinner />
           ) : errorMessage ? (
@@ -92,6 +131,7 @@ if(query && data.results.length > 0) {
             </ul>
           )}
           </section>
+</>
         </div>
       </main>
     );

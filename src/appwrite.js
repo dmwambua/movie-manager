@@ -30,7 +30,7 @@ export const updateSearchCount = async (searchTerm, movie) => {
             const doc = result.documents[0];
             await database.updateDocument(DATABASE_ID, COLLECTION_ID, doc.$id, {
                 count: doc.count + 1,
-            });
+            })
             console.log(`Updated count for searchTerm "${searchTerm}" to ${doc.count + 1}`);
         } else {
             console.log('Search term not found. Creating a new document...');
@@ -49,3 +49,17 @@ export const updateSearchCount = async (searchTerm, movie) => {
 // Example call to test the function
 updateSearchCount('testSearchTerm', { id: '123', poster_path: '/example.jpg' });
 
+export const getTrendingMovies = async () => {
+    try {
+        const result = await database.listDocuments(DATABASE_ID, COLLECTION_ID, [
+            Query.orderDesc('count'),
+            Query.limit(5) // Limit to 5 results
+
+        ]);
+        console.log('Trending movies:', result.documents);
+        return result.documents;
+    } catch (error) {
+        console.error('Error fetching trending movies:', error);
+        return [];
+    }
+}
