@@ -27,8 +27,8 @@ Currently, two official plugins are available:
 If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
 
 
-working package.json
-/*
+github pages package.json
+
 {
   "name": "movie-manager",
   "private": true,
@@ -38,8 +38,11 @@ working package.json
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build", 
+    "deploy": "gh-pages -d dist"  
   },
+  "homepage": "https://dmwambua.github.io/movie-manager/",
   "dependencies": {
     "@tailwindcss/vite": "^4.0.14",
     "appwrite": "^17.0.1",
@@ -57,22 +60,24 @@ working package.json
     "eslint": "^9.21.0",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
-    "gh-pages": "^6.3.0",
+    "gh-pages": "^6.3.0", 
     "globals": "^15.15.0",
     "vite": "^6.2.0"
   }
 }
-*/
 
 
-working vite.config.js
+
+
+github pates vite.config.js
 /*
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(),],
-})
+  base: '/movie-manager/',
+  plugins: [react(), tailwindcss()],
+});
 */
